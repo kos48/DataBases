@@ -400,3 +400,30 @@ INSERT INTO media VALUES (DEFAULT, 1, 1, 'im1.png', 78, DEFAULT);
 INSERT INTO media VALUES (DEFAULT, 2, 3, 'doc.docx', 1024, DEFAULT);
 
 SELECT * FROM media;
+
+-- создадим таблицу черный список
+CREATE TABLE black_list (
+  blocked_id BIGINT UNSIGNED NOT NULL, -- кто добавил в ЧС
+  locked_id BIGINT UNSIGNED NOT NULL, -- кого добавили в ЧС
+  accepted BOOLEAN DEFAULT False,
+  PRIMARY KEY(blocked_id, locked_id),
+  INDEX black_list_locked_idx (locked_id), -- для поиска заблокированных
+  CONSTRAINT fk_black_list_blocked FOREIGN KEY (blocked_id)  REFERENCES users (id),
+  CONSTRAINT fk_black_list_locked FOREIGN KEY (locked_id)  REFERENCES users (id)
+);
+-- петя добавит васю в ЧС
+INSERT INTO black_list VALUES (1, 2, True);
+
+SELECT * FROM media;
+
+-- создадим таблицу для постов пользователя
+CREATE TABLE user_post (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT UNSIGNED NOT NULL,
+  txt TEXT NOT NULL,  -- текст поста
+  media_types_id INT UNSIGNED NOT NULL, -- тип файла прикрепленного к посту
+  file_name VARCHAR(245) DEFAULT NULL COMMENT '/files/folder/img.png', -- файл прикркпленный к посту
+  INDEX fk_user_post_user_idx (user_id),  -- для поиска всех постов этого пользователя
+  CONSTRAINT fk_user_post_user_id FOREIGN KEY (user_id)  REFERENCES users (id),
+  CONSTRAINT fk_user_post_types FOREIGN KEY (media_types_id) REFERENCES media_types (id)
+);
