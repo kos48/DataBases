@@ -405,16 +405,16 @@ SELECT * FROM media;
 CREATE TABLE black_list (
   blocked_id BIGINT UNSIGNED NOT NULL, -- кто добавил в ЧС
   locked_id BIGINT UNSIGNED NOT NULL, -- кого добавили в ЧС
-  accepted BOOLEAN DEFAULT False,
+  accepted BOOLEAN DEFAULT True,
   PRIMARY KEY(blocked_id, locked_id),
-  INDEX black_list_locked_idx (locked_id), -- для поиска заблокированных
+  INDEX black_list_blocked_idx (blocked_id), -- для поиска заблокированных
   CONSTRAINT fk_black_list_blocked FOREIGN KEY (blocked_id)  REFERENCES users (id),
   CONSTRAINT fk_black_list_locked FOREIGN KEY (locked_id)  REFERENCES users (id)
 );
 -- петя добавит васю в ЧС
 INSERT INTO black_list VALUES (1, 2, True);
 
-SELECT * FROM media;
+SELECT * FROM black_list;
 
 -- создадим таблицу для постов пользователя
 CREATE TABLE user_post (
