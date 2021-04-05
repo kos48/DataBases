@@ -18,6 +18,7 @@
 --
 -- Table structure for table `communities`
 --
+USE vk;
 
 DROP TABLE IF EXISTS `communities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -322,3 +323,36 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2021-04-05 11:29:19
+
+--Запрос для переименования названий типов медиа (колонка name в media_types)
+--!!! Но до дампа уже все поменял !!!
+USE vk;
+
+SELECT *
+FROM media_types;
+
+UPDATE media_types 
+SET 
+	name = 'music'
+WHERE id = 1;
+
+UPDATE media_types 
+SET 
+name = 'document'
+WHERE id = 2;
+
+UPDATE media_types 
+SET 
+name = 'image'
+WHERE id = 3;
+
+UPDATE media_types 
+SET 
+name = 'photo'
+WHERE id = 4;
+
+SELECT *
+FROM media_types;
+
+
+
