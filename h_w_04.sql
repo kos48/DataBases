@@ -154,7 +154,7 @@ CREATE TABLE `media_types` (
 
 LOCK TABLES `media_types` WRITE;
 /*!40000 ALTER TABLE `media_types` DISABLE KEYS */;
-INSERT INTO `media_types` VALUES (2,'\r\ndocument'),(3,'image'),(1,'music'),(4,'photo');
+INSERT INTO `media_types` VALUES (2,'document'),(3,'image'),(1,'music'),(4,'photo');
 /*!40000 ALTER TABLE `media_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
