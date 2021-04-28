@@ -7,6 +7,8 @@ START TRANSACTION;
 
 INSERT INTO sample.users SELECT * FROM shop.users 
 WHERE id = 1;
+DELETE FROM shop.users 
+WHERE id = 1;
 
 COMMIT;
 
@@ -38,10 +40,9 @@ SELECT * FROM name_prod_catalog;
  * второму пользователю shop — любые операции в пределах базы данных shop. */
 
 -- первый пользователь
-DROP USER IF EXISTS 'shop'@'localhost';
-CREATE USER 'shop'@'localhost' IDENTIFIED WITH sha256_password BY '123456';
-GRANT ALL ON shop.* TO 'shop'@'localhost';
-GRANT GRANT OPTION ON shop.* TO 'shop'@'localhost';
+DROP USER IF EXISTS 'shop_read'@'localhost';
+CREATE USER 'shop_read'@'localhost' IDENTIFIED WITH sha256_password BY '123456';
+GRANT SELECT ON shop.* TO 'shop_read'@'localhost';
 
 
 -- второй пользователь
@@ -79,6 +80,8 @@ SELECT hello()//
  * Допустимо присутствие обоих полей или одно из них. Ситуация, когда оба поля принимают неопределенное значение NULL неприемлема. 
  * Используя триггеры, добейтесь того, чтобы одно из этих полей или оба поля были заполнены. 
  * При попытке присвоить полям NULL-значение необходимо отменить операцию. */
+;
+DELIMITER //
 
 drop trigger if exists my_trigger_les_9//
 CREATE TRIGGER my_trigger_les_9 BEFORE INSERT ON products
